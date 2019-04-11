@@ -9,7 +9,7 @@
 void bubble_sort(int arr[], int n) {
     if(n <= 1) return;   // 数组长度小于等于1时，可以不用排序直接返回
 
-    // 外层循环 表示需要循环的论数
+    // 外层循环 表示需要循环的轮数
     // 内层循环交换当前未排序的数
     for (int i = 0; i < n; i++) {
         for (int j = 1; j < n - i; j++) {
