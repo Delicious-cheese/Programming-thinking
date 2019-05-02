@@ -56,5 +56,3 @@ void insertion_sort(int arr[], int n) {
 }
 ```
 
-
-# 如何使用库函数排序
