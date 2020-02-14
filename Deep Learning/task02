@@ -1,0 +1,47 @@
+## 文本分类
+
+1. 文档切分：如果你得到的文档集合本身就是一篇一篇文章分开的，那么这一步就可以省略了。
+2. 文本分词：第一个是词典的构造，第二个是分词算法的操作。
+3. 去停用词: 去除不能表示特征的文本
+4. 文本特征提取：通过概率取舍
+5. 词频统计
+6. 文本向量化
+
+## 循环神经网络
+来由： 但当训练样本输入是连续的长短不一的序列，如基于时间的序列：一段段连续的语音，一段段连续的手写文字时，很难直接将其拆分成一个个独立的样本来通过DNN/CNN进行训练。
+<br/>
+（解决序列问题）只要训练数据足够，给定特定的x，就能得到希望的y
+
+### 特点：在计算所有隐状态时，每一步使用的参数U,W,b都是一样的，即每个步骤的参数都是共享的。
+### 算法思路：即通过梯度下降法一轮轮的迭代，得到合适的RNN模型参数U,W,V,b,c。
+### 梯度爆炸：可以通过梯度裁剪来缓解，当梯度大于给定阈值时，对梯度进行等比收缩。
+
+(```)
+import numpy as np
+
+X=[1,2]
+state=[0.0,0.0]
+# 分开定义不同输入部分的权重以方便操作
+w_cell_state=np.asarray([[0.1,0.2],[0.3,0.4]])
+w_cell_input=np.asarray([0.5,0.6])
+b_cell=np.asarray([0.1,-0.1])
+
+# 定义用于输出的全连接层参数
+w_output=np.asarray([[1.0],[2.0]])
+b_output=0.1
+
+# 按照时间顺序执行循环神经网络的前向传播过程
+for i in range(len(X)):
+    # 计算循环体中的全连接层神经网络
+    before_activation=np.dot(state,w_cell_state)+X[i]*w_cell_input+b_cell
+    state=np.tanh(before_activation)
+    # 根据当前时刻状态计算最终输出
+    final_output=np.dot(state,w_output)+b_output
+    # 输出每个时刻的信息
+    print("before activation:%f" % before_activation)
+    print("state:%f" % state)
+    print("output:%f" % final_output)
+    (```)
+
+
+
